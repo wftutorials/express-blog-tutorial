@@ -9,14 +9,79 @@ const port = process.env.PORT || 3000;
 
 app.use(morgan('tiny'));
 app.use(express.static(path.join(__dirname, '/public/')));
-app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css')));
-app.use('/js', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
-app.use('/js', express.static(path.join(__dirname, '/node_modules/jquery/dist')));
+
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
+const nav = [
+  { link: '/', title: 'Home' },
+  { link: '/about', title: 'About' },
+  { link: '/contact', title: 'Contact' },
+  { link: '/post/create', title: 'Create' },
+  { link: '/login', title: 'Login' }
+];
+
+const postRouter = require('./src/routes/postRoutes')(nav);
+
+app.use('/post', postRouter);
+
+const summaryPosts = [
+  {
+    title: 'Man must explore, and this exploration at its greatest',
+    excerpt: 'Problems look mighty small from 150 miles up',
+    author: 'Lev Nikolayevich Tolstoy',
+    date: 'September 24, 2018'
+  },
+  {
+    title: 'I believe every human has a finite number of heartbeats.',
+    excerpt: 'I aint wasting mine',
+    author: 'BoogieMan Doctor',
+    date: 'September 18, 2018'
+  },
+];
 app.get('/', (req, res) => {
-  res.render('index', { list: ['a', 'b'], title: 'Library' });
+  res.render(
+    'index',
+    {
+      title: 'Express.js Blog',
+      nav,
+      excerpt: 'A Blog created using express.js',
+      posts: summaryPosts
+    }
+  );
+});
+
+app.get('/about', (req, res) => {
+  res.render(
+    'about',
+    {
+      title: 'About',
+      nav,
+      excerpt: 'A Blog created using express.js'
+    }
+  );
+});
+
+app.get('/contact', (req, res) => {
+  res.render(
+    'contact',
+    {
+      title: 'Contact',
+      nav,
+      excerpt: 'A Blog created using express.js'
+    }
+  );
+});
+
+app.get('/login', (req, res) => {
+  res.render(
+    'login',
+    {
+      title: 'Login',
+      nav,
+      excerpt: 'A Blog created using express.js'
+    }
+  );
 });
 
 app.listen(port, () => {
