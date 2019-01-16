@@ -1,17 +1,25 @@
 
 const model = require('../models/post');
 const debug = require('debug')('app');
+const passport = require('passport');
+const nav = require('../menus/main');
+const user = require('../models/user');
 
-const { nav } = require('../menus/main');
-
+function getNavs(req) {
+  if (user.isGuest(req)) {
+    return nav.guestNav;
+  }
+  return nav.userNav;
+}
 
 exports.home = async (req, res) => {
   await model.getPosts().then((data) => {
     res.render(
       'index',
       {
+        username: user.userName(req),
         title: 'Express.js Blog',
-        nav,
+        nav: getNavs(req),
         excerpt: 'A Blog created using express.js',
         posts: data
       }
@@ -25,7 +33,7 @@ exports.about = (req, res) => {
     'about',
     {
       title: 'About',
-      nav,
+      nav: getNavs(req),
       excerpt: 'A Blog created using express.js'
     }
   );
@@ -35,7 +43,7 @@ exports.contact = (req, res) => {
     'contact',
     {
       title: 'Contact',
-      nav,
+      nav: getNavs(req),
       excerpt: 'A Blog created using express.js'
     }
   );
@@ -45,8 +53,16 @@ exports.login = (req, res) => {
     'login',
     {
       title: 'Login',
-      nav,
+      nav: getNavs(req),
       excerpt: 'A Blog created using express.js'
     }
   );
 };
+exports.logout = (req, res) => {
+  req.logout();
+  res.redirect('/');
+};
+exports.auth = passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login'
+});

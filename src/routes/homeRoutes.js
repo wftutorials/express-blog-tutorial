@@ -15,4 +15,10 @@ homeRouter.route('/contact')
 homeRouter.route('/login')
 .get(controller.login);
 
+homeRouter.route('/login')
+.post(controller.auth);
+
+homeRouter.route('/logout')
+.get(controller.logout);
+
 module.exports = homeRouter;
