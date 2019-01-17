@@ -4,6 +4,17 @@ const { guestNav } = require('../menus/main');
 const user = require('../models/user');
 const debug = require('debug')('app');
 
+
+function renderCreateView(res, status) {
+    res.render('create', {
+        formSubmit: status,
+        nav: guestNav,
+        title: 'Create Post',
+        excerpt: 'Create a new Post',
+    });
+}
+
+
 exports.index = (req, res) => {
     res.render('posts', {
 
@@ -11,26 +22,16 @@ exports.index = (req, res) => {
 };
 
 exports.create = (req, res) => {
-    res.render('create', {
-        nav: guestNav,
-        title: 'Create Post',
-        excerpt: 'Create a new Post',
-    });
+    renderCreateView(res, false);
 };
 
 exports.save = async (req, res) => {
-    //res.json(req.body);
     try {
-        await model.insertPost({
-            title: 'Hello',
-            excerpt: 'hellow owrd',
-            author: 'Wynton',
-            date: '255 Septes',
-        });
+        await model.insertPost(req.body);
     } catch (error) {
         debug(error);
     }
-    res.redirect('/post/create');
+    renderCreateView(res, true);
 };
 
 exports.view = async (req, res) => {

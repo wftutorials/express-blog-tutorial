@@ -19,25 +19,34 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
+        <% if(formSubmit){ %>
+          <div class="alert alert-success" role="alert">
+            Your post was successfully submitted.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          </div>
+        <% } %>
         <form action='/post/create' method="post">
         <div class="form-group">
           <label for="exampleInputEmail1">Title</label>
-          <input name="title" type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          <input name="title" type="text" class="form-control"  placeholder="Enter Post Title">
         </div>
         <div class="form-group">
+        <label for="exampleInputEmail1">Excerpt</label>
+        <input name="excerpt" type="text" class="form-control" placeholder="Enter Post Excerpt">
+      </div>
+        <div class="form-group">
           <label for="exampleInputEmail1">Author</label>
-          <input name="author" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          <input name="author" type="text" class="form-control" placeholder="Enter Author Name">
         </div>
         <div class="form-group">
           <label for="exampleInputEmail1">Date</label>
-          <input name="date" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          <input name="date" type="text" class="form-control" placeholder="Enter email">
         </div>
         <div class="form-group">
         <label for="exampleFormControlTextarea1">Content</label>
-        <textarea name="excerpt" class="form-control" id="exampleFormControlTextarea1" rows="8"></textarea>
+        <textarea name="content" class="form-control"  rows="8"></textarea>
       </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
