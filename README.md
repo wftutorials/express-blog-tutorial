@@ -4,7 +4,7 @@ This is a small blog application created using express.js framework. I created i
 
 You can learn more about express here - https://expressjs.com/.
 
-The walkthrough guide for this repo can be found here - https://wftutorials.wordpress.com/
+The walkthrough guide for this repo can be found here - https://wftutorials.wordpress.com/2019/01/20/express-js-tutorial/
 
 ## Preview
 
